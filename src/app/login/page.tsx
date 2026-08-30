@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { loginAction, type AuthActionState } from "@/app/actions/auth";
+import { AuthShell } from "@/components/auth/AuthShell";
 
 const initial: AuthActionState = {};
 
@@ -10,11 +11,19 @@ export default function LoginPage() {
   const [state, formAction, pending] = useActionState(loginAction, initial);
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-16">
-      <h1 className="text-2xl font-bold">Log in</h1>
-      <p className="mt-1 text-sm text-muted">Welcome back.</p>
-
-      <form action={formAction} className="mt-6 space-y-4">
+    <AuthShell
+      title="Log in"
+      subtitle="Pick up where you left off."
+      footer={
+        <>
+          No account?{" "}
+          <Link href="/register" className="font-medium text-primary underline">
+            Create one
+          </Link>
+        </>
+      }
+    >
+      <form action={formAction} className="space-y-4">
         <Field label="Email" name="email" type="email" autoComplete="email" required />
         <Field
           label="Password"
@@ -38,14 +47,7 @@ export default function LoginPage() {
           {pending ? "Signing in…" : "Log in"}
         </button>
       </form>
-
-      <p className="mt-6 text-sm text-muted">
-        No account?{" "}
-        <Link href="/register" className="font-medium text-primary underline">
-          Create one
-        </Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }
 

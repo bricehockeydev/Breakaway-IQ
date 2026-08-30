@@ -4,7 +4,7 @@
 export type SkillCategory = "shooting" | "stickhandling" | "skating";
 
 export interface SkillPhase {
-  /** Machine key, referenced in the AI result. */
+  /** Machine key, referenced in the breakdown result. */
   key: string;
   /** Human label shown in the UI. */
   name: string;

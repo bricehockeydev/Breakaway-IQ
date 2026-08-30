@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { AuthShell } from "@/components/auth/AuthShell";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -53,11 +54,19 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-16">
-      <h1 className="text-2xl font-bold">Create your account</h1>
-      <p className="mt-1 text-sm text-muted">Then start your membership to run breakdowns.</p>
-
-      <form onSubmit={onSubmit} className="mt-6 space-y-4">
+    <AuthShell
+      title="Create your account"
+      subtitle="Then start your membership to send in clips."
+      footer={
+        <>
+          Already have an account?{" "}
+          <Link href="/login" className="font-medium text-primary underline">
+            Log in
+          </Link>
+        </>
+      }
+    >
+      <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Name" name="name" type="text" autoComplete="name" />
         <Field label="Email" name="email" type="email" autoComplete="email" required />
         <Field
@@ -81,14 +90,7 @@ export default function RegisterPage() {
           {pending ? "Creating…" : "Create account"}
         </button>
       </form>
-
-      <p className="mt-6 text-sm text-muted">
-        Already have an account?{" "}
-        <Link href="/login" className="font-medium text-primary underline">
-          Log in
-        </Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }
 
