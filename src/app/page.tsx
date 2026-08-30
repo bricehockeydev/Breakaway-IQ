@@ -30,7 +30,7 @@ export default async function Home() {
           Film your shot. Get a coach&apos;s breakdown in a minute.
         </h1>
         <p className="mt-5 max-w-xl text-lg text-muted">
-          BreakawayIQ analyzes your technique frame by frame, tells you the one or two
+          Br.ice Skills Lab analyzes your technique frame by frame, tells you the one or two
           things holding you back, and gives you the drills to fix them.
         </p>
         <div className="mt-8 flex gap-3">

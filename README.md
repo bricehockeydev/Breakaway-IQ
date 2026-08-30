@@ -1,4 +1,6 @@
-# BreakawayIQ — AI hockey skills app
+# Br.ice Skills Lab — AI hockey skills app
+
+By **Brice Hockey Development**.
 
 Players pick a hockey skill (wrist shot, slap shot, crossovers, …), upload a short
 clip, and get an AI technique breakdown: per-phase scoring, their top flaws, and

@@ -8,7 +8,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BreakawayIQ — AI hockey skill breakdowns",
+  title: "Br.ice Skills Lab — AI hockey skill breakdowns",
   description:
     "Upload a clip of your shot or skating and get an AI technique breakdown with drills to fix it.",
 };
@@ -27,7 +27,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-border py-6 text-center text-sm text-muted">
-          BreakawayIQ · AI-assisted coaching — always train with a qualified coach too.
+          Br.ice Skills Lab · AI-assisted coaching — always train with a qualified coach too.
         </footer>
       </body>
     </html>
