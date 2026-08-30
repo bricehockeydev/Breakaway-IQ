@@ -63,13 +63,14 @@ export const SKILLS: Skill[] = [
           "Bottom hand is the driver — it powers the shot",
           "Significant, visible flex in the stick before release",
           "Hands stay near shoulder-width — too high or too low kills the flex",
-          "Puck is dragged on the blade, traveling from back, through the body",
+          "Puck stays within a ~2×2 ft box in front of the shooting-hand side — no long sweep out to the side",
         ],
       },
       {
         key: "release",
         name: "Release",
         checkpoints: [
+          "Compact release — the shot comes out of the box, not off a big telegraphed sweep",
           "Puck releases in front of the front foot",
           "Puck rolls heel-to-toe off the blade with spin",
           "Wrists snap/roll at release",

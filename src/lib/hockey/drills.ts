@@ -73,6 +73,21 @@ export const DRILLS: Drill[] = [
     prescription: "4 sets of 15, 3x/week",
   },
   {
+    key: "shooting-box",
+    name: "2×2 Box Release",
+    skillKeys: ["wrist-shot", "snap-shot"],
+    targetsFlaws: [
+      "long telegraphed sweep",
+      "puck held too far to the side",
+      "slow release",
+      "big windup",
+      "puck travels too far before release",
+    ],
+    description:
+      "Tape a 2 ft × 2 ft box on the floor in front of your shooting side. Every rep the puck must start and release inside that box — no sweeping it out wide. Then put a second puck in the box as an obstacle and shoot around it, forcing a tight, quick release.",
+    prescription: "4 sets of 15, 3x/week",
+  },
+  {
     key: "front-shin-shooting",
     name: "Front-Shin Perpendicular Shooting",
     skillKeys: ["wrist-shot", "snap-shot"],
