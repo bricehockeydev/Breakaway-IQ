@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import type { AnalysisDTO } from "@/types/analysis";
 import { getSkill } from "@/lib/hockey/skills";
 import { getDrill } from "@/lib/hockey/drills";
-import { ScoreDial } from "@/components/ScoreDial";
 
 export function AnalysisView({ id }: { id: string }) {
   const [data, setData] = useState<AnalysisDTO | null>(null);
@@ -107,14 +106,11 @@ export function AnalysisView({ id }: { id: string }) {
         ← Dashboard
       </Link>
 
-      <div className="mt-3 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold">{data.skillName} breakdown</h1>
-          <p className="text-xs text-muted">
-            {new Date(data.createdAt).toLocaleString()}
-          </p>
-        </div>
-        <ScoreDial score={r.overallScore} />
+      <div className="mt-3">
+        <h1 className="text-2xl font-bold">{data.skillName} breakdown</h1>
+        <p className="text-xs text-muted">
+          {new Date(data.createdAt).toLocaleString()}
+        </p>
       </div>
 
       {!r.filmingUsable && (
@@ -157,18 +153,27 @@ export function AnalysisView({ id }: { id: string }) {
           {r.phases.map((p) => {
             const phaseName =
               skill?.phases.find((sp) => sp.key === p.phaseKey)?.name ?? p.phaseKey;
+            const clean = !p.whatToFix?.trim();
             return (
               <div key={p.phaseKey} className="rounded-xl border border-border bg-surface p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <div className="font-medium">{phaseName}</div>
-                  <div className="text-sm font-semibold">{p.score}/10</div>
+                  {clean && (
+                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">
+                      clean
+                    </span>
+                  )}
                 </div>
-                <p className="mt-1 text-sm text-emerald-700">
-                  <span className="font-medium">Good:</span> {p.whatWentWell}
-                </p>
-                <p className="mt-1 text-sm text-rose-700">
-                  <span className="font-medium">Fix:</span> {p.whatToFix}
-                </p>
+                {p.whatWentWell?.trim() && (
+                  <p className="mt-1 text-sm text-emerald-700">
+                    <span className="font-medium">Working:</span> {p.whatWentWell}
+                  </p>
+                )}
+                {!clean && (
+                  <p className="mt-1 text-sm text-rose-700">
+                    <span className="font-medium">Fix:</span> {p.whatToFix}
+                  </p>
+                )}
               </div>
             );
           })}

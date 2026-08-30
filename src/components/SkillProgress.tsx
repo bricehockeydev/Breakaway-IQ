@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { ProgressAnalysis } from "@/lib/analyses";
-import { ScoreDial } from "@/components/ScoreDial";
-import { ScoreTrend } from "@/components/ScoreTrend";
 
 interface Props {
   skillName: string;
@@ -21,21 +19,14 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
   const b = analyses.find((x) => x.id === bId) ?? analyses[analyses.length - 1];
 
   const fmt = (iso: string) => new Date(iso).toLocaleDateString();
+  const fixFor = (an: ProgressAnalysis, key: string) =>
+    an.phaseFixes.find((p) => p.phaseKey === key)?.whatToFix?.trim() ?? "";
 
   return (
     <div>
-      <section className="mt-6">
-        <h2 className="font-semibold">Score over time</h2>
-        <div className="mt-2 rounded-xl border border-border bg-surface p-4">
-          <ScoreTrend
-            points={analyses.map((x) => ({ date: x.createdAt, score: x.overallScore }))}
-          />
-        </div>
-      </section>
-
       {analyses.length >= 2 && (
-        <section className="mt-8">
-          <h2 className="font-semibold">Compare</h2>
+        <section className="mt-6">
+          <h2 className="font-semibold">Then vs. now</h2>
 
           <div className="mt-2 grid grid-cols-2 gap-4">
             <label className="text-sm">
@@ -47,7 +38,7 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
               >
                 {analyses.map((x, i) => (
                   <option key={x.id} value={x.id}>
-                    #{i + 1} · {fmt(x.createdAt)} · {x.overallScore.toFixed(1)}
+                    #{i + 1} · {fmt(x.createdAt)}
                   </option>
                 ))}
               </select>
@@ -61,7 +52,7 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
               >
                 {analyses.map((x, i) => (
                   <option key={x.id} value={x.id}>
-                    #{i + 1} · {fmt(x.createdAt)} · {x.overallScore.toFixed(1)}
+                    #{i + 1} · {fmt(x.createdAt)}
                   </option>
                 ))}
               </select>
@@ -71,10 +62,7 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {[a, b].map((x, idx) => (
               <div key={idx} className="rounded-xl border border-border bg-surface p-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted">{fmt(x.createdAt)}</span>
-                  <ScoreDial score={x.overallScore} />
-                </div>
+                <div className="text-xs text-muted">{fmt(x.createdAt)}</div>
                 <video
                   src={x.videoUrl}
                   controls
@@ -85,50 +73,47 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
           </div>
 
           <h3 className="mt-6 text-sm font-semibold">Phase by phase</h3>
-          <div className="mt-2 overflow-x-auto">
-            <table className="w-full min-w-[360px] text-sm">
-              <thead>
-                <tr className="text-left text-muted">
-                  <th className="py-1 pr-2 font-medium">Phase</th>
-                  <th className="py-1 px-2 font-medium">Then</th>
-                  <th className="py-1 px-2 font-medium">Now</th>
-                  <th className="py-1 pl-2 font-medium">Change</th>
-                </tr>
-              </thead>
-              <tbody>
-                {phaseNames.map((p) => {
-                  const then = a.phaseScores.find((s) => s.phaseKey === p.key)?.score;
-                  const now = b.phaseScores.find((s) => s.phaseKey === p.key)?.score;
-                  const diff =
-                    then != null && now != null ? Number((now - then).toFixed(1)) : null;
-                  return (
-                    <tr key={p.key} className="border-t border-border">
-                      <td className="py-1.5 pr-2">{p.name}</td>
-                      <td className="py-1.5 px-2">{then ?? "—"}</td>
-                      <td className="py-1.5 px-2">{now ?? "—"}</td>
-                      <td
-                        className={`py-1.5 pl-2 font-medium ${
-                          diff == null
-                            ? ""
-                            : diff > 0
-                              ? "text-emerald-600"
-                              : diff < 0
-                                ? "text-rose-600"
-                                : "text-muted"
-                        }`}
-                      >
-                        {diff == null ? "—" : diff > 0 ? `+${diff}` : diff}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="mt-2 space-y-2">
+            {phaseNames.map((p) => {
+              const then = fixFor(a, p.key);
+              const now = fixFor(b, p.key);
+              const cleared = then && !now;
+              return (
+                <div
+                  key={p.key}
+                  className="rounded-lg border border-border bg-surface p-3 text-sm"
+                >
+                  <div className="flex items-center gap-2 font-medium">
+                    {p.name}
+                    {cleared && (
+                      <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">
+                        cleared
+                      </span>
+                    )}
+                    {!then && !now && (
+                      <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">
+                        clean both times
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-1 grid gap-1 sm:grid-cols-2">
+                    <p className="text-muted">
+                      <span className="font-medium text-foreground">Then:</span>{" "}
+                      {then || "clean"}
+                    </p>
+                    <p className="text-muted">
+                      <span className="font-medium text-foreground">Now:</span>{" "}
+                      {now || "clean"}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+          <div className="mt-6 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
             <div>
-              <h3 className="font-semibold">Flaws then</h3>
+              <h3 className="font-semibold">Priorities then</h3>
               <ul className="mt-1 list-disc pl-4 text-muted">
                 {a.keyFlaws.map((f, i) => (
                   <li key={i}>{f}</li>
@@ -136,7 +121,7 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold">Flaws now</h3>
+              <h3 className="font-semibold">Priorities now</h3>
               <ul className="mt-1 list-disc pl-4 text-muted">
                 {b.keyFlaws.map((f, i) => (
                   <li key={i}>{f}</li>
@@ -148,7 +133,7 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
       )}
 
       <section className="mt-8 mb-4">
-        <h2 className="font-semibold">All {skillName} analyses</h2>
+        <h2 className="font-semibold">All {skillName} breakdowns</h2>
         <ul className="mt-2 divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
           {[...analyses].reverse().map((x, i) => (
             <li key={x.id}>
@@ -159,7 +144,9 @@ export function SkillProgress({ skillName, phaseNames, analyses }: Props) {
                 <span className="text-sm">
                   #{analyses.length - i} · {new Date(x.createdAt).toLocaleString()}
                 </span>
-                <span className="text-sm font-semibold">{x.overallScore.toFixed(1)}/10</span>
+                <span className="text-xs text-muted">
+                  {x.keyFlaws.length} priorit{x.keyFlaws.length === 1 ? "y" : "ies"}
+                </span>
               </Link>
             </li>
           ))}

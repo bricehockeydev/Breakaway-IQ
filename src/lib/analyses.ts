@@ -7,8 +7,7 @@ export interface ProgressAnalysis {
   id: string;
   createdAt: string; // ISO
   videoUrl: string;
-  overallScore: number;
-  phaseScores: { phaseKey: string; score: number }[];
+  phaseFixes: { phaseKey: string; whatToFix: string }[];
   keyFlaws: string[];
 }
 
@@ -16,10 +15,9 @@ export interface SkillProgressSummary {
   skillKey: string;
   skillName: string;
   count: number;
-  firstScore: number;
-  latestScore: number;
   latestAt: string;
-  delta: number;
+  firstFlawCount: number;
+  latestFlawCount: number;
 }
 
 function parseResult(json: string | null): AnalysisResult | null {
@@ -49,10 +47,9 @@ export async function getSkillProgress(
       id: r.id,
       createdAt: r.createdAt.toISOString(),
       videoUrl: r.videoUrl,
-      overallScore: result.overallScore,
-      phaseScores: result.phases.map((p) => ({
+      phaseFixes: result.phases.map((p) => ({
         phaseKey: p.phaseKey,
-        score: p.score,
+        whatToFix: p.whatToFix ?? "",
       })),
       keyFlaws: result.keyFlaws,
     });
@@ -70,27 +67,24 @@ export async function getProgressSummaries(
     select: { skillKey: true, resultJson: true, createdAt: true },
   });
 
-  const bySkill = new Map<string, { score: number; at: Date }[]>();
+  const bySkill = new Map<string, { flaws: number; at: Date }[]>();
   for (const r of rows) {
     const result = parseResult(r.resultJson);
     if (!result) continue;
     const list = bySkill.get(r.skillKey) ?? [];
-    list.push({ score: result.overallScore, at: r.createdAt });
+    list.push({ flaws: result.keyFlaws.length, at: r.createdAt });
     bySkill.set(r.skillKey, list);
   }
 
   const summaries: SkillProgressSummary[] = [];
   for (const [skillKey, entries] of bySkill) {
-    const first = entries[0];
-    const latest = entries[entries.length - 1];
     summaries.push({
       skillKey,
       skillName: getSkill(skillKey)?.name ?? skillKey,
       count: entries.length,
-      firstScore: first.score,
-      latestScore: latest.score,
-      latestAt: latest.at.toISOString(),
-      delta: Number((latest.score - first.score).toFixed(1)),
+      latestAt: entries[entries.length - 1].at.toISOString(),
+      firstFlawCount: entries[0].flaws,
+      latestFlawCount: entries[entries.length - 1].flaws,
     });
   }
   summaries.sort((a, b) => +new Date(b.latestAt) - +new Date(a.latestAt));

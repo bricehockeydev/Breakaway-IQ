@@ -9,9 +9,12 @@ const MODEL = "claude-opus-5";
 
 const phaseAssessmentSchema = z.object({
   phaseKey: z.string().describe("The phase key being assessed"),
-  score: z.number().min(1).max(10).describe("1 = major flaw, 10 = textbook"),
-  whatWentWell: z.string(),
-  whatToFix: z.string(),
+  whatWentWell: z
+    .string()
+    .describe("What the player does well in this phase, specific. Empty string if nothing stands out."),
+  whatToFix: z
+    .string()
+    .describe("The specific thing to fix in this phase. Empty string if this phase looks clean."),
 });
 
 const recommendedDrillSchema = z.object({
@@ -26,8 +29,9 @@ export const analysisResultSchema = z.object({
   filmingNotes: z
     .string()
     .describe("If filmingUsable is false, tell the player how to re-film. Otherwise empty."),
-  overallSummary: z.string().describe("2–4 sentences, encouraging but direct"),
-  overallScore: z.number().min(1).max(10),
+  overallSummary: z
+    .string()
+    .describe("2–4 sentences: what's working and the main thing to work on. Direct. No scores, grades, or ratings."),
   phases: z.array(phaseAssessmentSchema),
   keyFlaws: z
     .array(z.string())
@@ -74,7 +78,10 @@ frames, not each frame in isolation.
 
 Skill overview: ${skill.blurb}
 
-Assess these phases. For each, score 1–10 against the "good technique" checkpoints:
+Assess these phases against the "good technique" checkpoints. For each phase, say
+what the player does well and the specific thing to fix (or leave the fix empty if
+the phase looks clean). Do NOT give scores, grades, ratings, or numbers — this is a
+technique breakdown, not a report card.
 
 ${phaseText}
 
@@ -88,8 +95,9 @@ Rules:
   clip too short to show the motion), set filmingUsable=false, explain how to re-film
   in filmingNotes, and still fill the other fields with your best partial read.
 - Be specific and concrete. "Rotate your hips more" not "work on power".
-- Base scores on what you can actually see. Don't hallucinate detail that isn't in
-  the frames.
+- Base everything on what you can actually see. Don't hallucinate detail that isn't
+  in the frames.
+- No scores, grades, ratings, letter grades, or numbers out of 10 anywhere.
 - Tone: direct and useful, the way a good coach talks to a committed player.`;
 }
 
@@ -118,7 +126,7 @@ export async function analyzeSkill(
   }
   content.push({
     type: "text",
-    text: `Analyze this ${skill.name}. Return the structured assessment: per-phase scores, the top flaws to fix, and drills from the catalog that address them.`,
+    text: `Analyze this ${skill.name}. Return the structured breakdown: per-phase what's working and what to fix, the top priorities to fix, and drills from the catalog that address them.`,
   });
 
   const response = await anthropic.messages.parse({

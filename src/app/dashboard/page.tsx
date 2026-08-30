@@ -58,37 +58,38 @@ export default async function DashboardPage() {
         </p>
       ) : (
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          {summaries.map((s) => (
-            <Link
-              key={s.skillKey}
-              href={`/progress/${s.skillKey}`}
-              className="rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary"
-            >
-              <div className="flex items-baseline justify-between">
-                <span className="font-semibold">{s.skillName}</span>
-                <span className="text-lg font-bold">{s.latestScore.toFixed(1)}</span>
-              </div>
-              <div className="mt-1 flex items-center gap-2 text-xs text-muted">
-                <span>
-                  {s.count} {s.count === 1 ? "analysis" : "analyses"}
-                </span>
-                {s.count >= 2 && (
-                  <span
-                    className={
-                      s.delta > 0
-                        ? "text-emerald-600"
-                        : s.delta < 0
-                          ? "text-rose-600"
-                          : ""
-                    }
-                  >
-                    {s.delta > 0 ? `▲ +${s.delta}` : s.delta < 0 ? `▼ ${s.delta}` : "no change"}{" "}
-                    since first
+          {summaries.map((s) => {
+            const improved = s.count >= 2 && s.latestFlawCount < s.firstFlawCount;
+            const worse = s.count >= 2 && s.latestFlawCount > s.firstFlawCount;
+            return (
+              <Link
+                key={s.skillKey}
+                href={`/progress/${s.skillKey}`}
+                className="rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary"
+              >
+                <div className="font-semibold">{s.skillName}</div>
+                <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+                  <span>
+                    {s.count} {s.count === 1 ? "breakdown" : "breakdowns"} · last{" "}
+                    {new Date(s.latestAt).toLocaleDateString()}
                   </span>
-                )}
-              </div>
-            </Link>
-          ))}
+                  {s.count >= 2 && (
+                    <span
+                      className={
+                        improved
+                          ? "text-emerald-600"
+                          : worse
+                            ? "text-rose-600"
+                            : ""
+                      }
+                    >
+                      priorities: {s.firstFlawCount} → {s.latestFlawCount}
+                    </span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       )}
 
