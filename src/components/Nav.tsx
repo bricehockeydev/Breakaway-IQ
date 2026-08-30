@@ -10,7 +10,7 @@ export async function Nav() {
     <header className="border-b border-border bg-surface">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href={signedIn ? "/dashboard" : "/"} className="font-semibold tracking-tight">
-          Br<span className="text-accent">.</span>ice Skills Lab
+          Breakaway<span className="text-accent"> IQ</span>
         </Link>
 
         <nav className="flex items-center gap-4 text-sm">

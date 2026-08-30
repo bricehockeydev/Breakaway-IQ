@@ -1,4 +1,4 @@
-# Br.ice Skills Lab — AI hockey skills app
+# Breakaway IQ — AI hockey skills app
 
 By **Brice Hockey Development**.
 
