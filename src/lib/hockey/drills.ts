@@ -235,48 +235,62 @@ export const DRILLS: Drill[] = [
     prescription: "5 sets of 10, 2x/week",
   },
 
-  // --- Stickhandling / dekes ---
+  // --- Stickhandling ---
   {
     key: "wide-puck-control",
-    name: "Wide Puck Control",
-    skillKeys: ["forehand-deke"],
+    name: "Full-Reach Cup Control",
+    skillKeys: ["figure-8-stickhandle"],
     targetsFlaws: [
-      "puck slides away on the pull",
-      "loses puck on deke",
-      "puck too far from body",
+      "puck slides off the blade",
+      "small taps in front of the body",
+      "puck not cupped",
+      "hands tucked in close",
       "poor puck control",
     ],
     description:
-      "Stationary, move the puck from full forehand reach to full backhand reach and back, keeping it cupped the whole way. Then repeat walking forward. Soft hands, puck silent on the blade.",
+      "Stationary, move the puck from full forehand reach to full backhand reach and back, keeping it cupped and silent on the blade the whole way. Exaggerate the reach. Then add the figure-8 shape.",
     prescription: "3 sets of 60 seconds, daily",
   },
   {
-    key: "cone-deke-finish",
-    name: "Cone Deke-to-Finish",
-    skillKeys: ["forehand-deke"],
+    key: "figure-8-around-feet",
+    name: "Figure-8 Around the Feet",
+    skillKeys: ["figure-8-stickhandle"],
     targetsFlaws: [
-      "feet stop during deke",
-      "glide through the move",
-      "no shoulder fake",
-      "move is not deceptive",
-      "slow hands",
+      "puck stays too far in front",
+      "stiff hands",
+      "can't control the puck close to the body",
+      "fumbles at the ends",
     ],
     description:
-      "Attack a single cone at pace. Sell the forehand with a shoulder/weight fake, pull flat to the backhand past the cone while your feet keep moving, and finish on net.",
-    prescription: "4 sets of 8, 2–3x/week",
+      "Run the figure-8 tight around your own feet — forehand loop around the front foot, backhand loop around the back foot. Forces soft hands and close control at both ends of the pattern.",
+    prescription: "3 sets of 60 seconds, daily",
   },
   {
     key: "head-up-stickhandling",
-    name: "Head-Up Stickhandling",
-    skillKeys: ["forehand-deke"],
+    name: "Head-Up Figure-8",
+    skillKeys: ["figure-8-stickhandle"],
     targetsFlaws: [
       "eyes down on the puck",
       "head down",
       "not scanning",
+      "pattern falls apart when not looking",
     ],
     description:
-      "Stickhandle through a set of obstacles while reading hand signals from a partner (or cards on the wall) and calling them out. Forces eyes up while the hands work.",
+      "Run a continuous figure-8 while reading hand signals from a partner (or cards on the wall) and calling them out. Forces your eyes up while the hands keep the pattern going.",
     prescription: "3 sets of 90 seconds, daily",
+  },
+  {
+    key: "tight-wide-figure-8",
+    name: "Tight–Wide Figure-8",
+    skillKeys: ["figure-8-stickhandle"],
+    targetsFlaws: [
+      "only one puck-handling range",
+      "loses control changing speed",
+      "no touch variation",
+    ],
+    description:
+      "Alternate 5 seconds of tight, quick figure-8s close to the body with 5 seconds of slow, full-reach figure-8s. Builds control across the whole range instead of one comfortable tempo.",
+    prescription: "4 sets of 40 seconds, daily",
   },
 
   // --- Skating ---
