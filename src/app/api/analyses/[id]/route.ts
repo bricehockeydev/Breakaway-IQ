@@ -37,6 +37,8 @@ export async function GET(
     status: analysis.status,
     videoUrl: analysis.videoUrl,
     videoDurationSec: analysis.videoDurationSec,
+    trimStartSec: analysis.trimStartSec,
+    trimEndSec: analysis.trimEndSec,
     errorMessage: analysis.errorMessage,
     createdAt: analysis.createdAt,
     result,

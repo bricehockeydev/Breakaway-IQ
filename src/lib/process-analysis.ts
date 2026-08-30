@@ -23,7 +23,10 @@ export async function processAnalysis(analysisId: string): Promise<void> {
 
   try {
     const bytes = await readVideoBytes(analysis.videoUrl);
-    const { durationSec, frames } = await extractFramesFromBuffer(bytes, FRAME_COUNT);
+    const { durationSec, frames } = await extractFramesFromBuffer(bytes, FRAME_COUNT, {
+      startSec: analysis.trimStartSec,
+      endSec: analysis.trimEndSec,
+    });
     const { result, usage } = await analyzeSkill(skill, frames);
 
     console.log(

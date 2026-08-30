@@ -83,7 +83,9 @@ model Analysis {
   skillKey         String
   videoUrl         String
   videoDurationSec Float?
-  status           String   @default("processing") // processing | complete | failed
+  trimStartSec     Float?
+  trimEndSec       Float?
+  status           String   @default("draft") // draft | processing | complete | failed
   resultJson       String?  // JSON-serialized AnalysisResult
   errorMessage     String?
   createdAt        DateTime @default(now())

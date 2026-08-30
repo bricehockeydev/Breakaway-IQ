@@ -47,15 +47,22 @@ function parseDuration(stderr: string): number | null {
  * Write the clip bytes to a temp file and pull `count` evenly-spaced JPEG frames,
  * skipping the first/last 8% (usually setup + walk-away).
  */
+/** Optional window (seconds) to sample frames from. Defaults to the whole clip. */
+export interface TrimWindow {
+  startSec?: number | null;
+  endSec?: number | null;
+}
+
 export async function extractFramesFromBuffer(
   bytes: Buffer,
   count = 10,
+  trim: TrimWindow = {},
 ): Promise<FrameExtractionResult> {
   const workDir = await mkdtemp(join(tmpdir(), "skillsapp-"));
   const videoFile = join(workDir, "clip.mp4");
   try {
     await writeFile(videoFile, bytes);
-    return await framesFromFile(videoFile, workDir, count);
+    return await framesFromFile(videoFile, workDir, count, trim);
   } finally {
     await rm(workDir, { recursive: true, force: true }).catch(() => {});
   }
@@ -65,10 +72,11 @@ export async function extractFramesFromBuffer(
 export async function extractFramesFromPath(
   videoFile: string,
   count = 10,
+  trim: TrimWindow = {},
 ): Promise<FrameExtractionResult> {
   const workDir = await mkdtemp(join(tmpdir(), "skillsapp-"));
   try {
-    return await framesFromFile(videoFile, workDir, count);
+    return await framesFromFile(videoFile, workDir, count, trim);
   } finally {
     await rm(workDir, { recursive: true, force: true }).catch(() => {});
   }
@@ -78,6 +86,7 @@ async function framesFromFile(
   videoFile: string,
   workDir: string,
   count: number,
+  trim: TrimWindow,
 ): Promise<FrameExtractionResult> {
   const probe = await runFfmpeg(["-i", videoFile]);
   const duration = parseDuration(probe.stderr);
@@ -85,8 +94,21 @@ async function framesFromFile(
     throw new Error("Could not read video duration — is the file a valid video?");
   }
 
-  const start = duration * 0.08;
-  const end = duration * 0.92;
+  // Clamp the trim window to the real duration; fall back to a centered 84% window.
+  const hasTrim =
+    trim.startSec != null &&
+    trim.endSec != null &&
+    trim.endSec - trim.startSec >= 0.5;
+
+  const winStart = hasTrim
+    ? Math.max(0, Math.min(trim.startSec!, duration - 0.5))
+    : duration * 0.08;
+  const winEnd = hasTrim
+    ? Math.max(winStart + 0.5, Math.min(trim.endSec!, duration))
+    : duration * 0.92;
+
+  const start = winStart;
+  const end = winEnd;
   const span = Math.max(end - start, 0.1);
   const step = count > 1 ? span / (count - 1) : 0;
 

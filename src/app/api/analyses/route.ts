@@ -1,10 +1,9 @@
-import { NextResponse, after } from "next/server";
+import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getSkill } from "@/lib/hockey/skills";
 import { getSubscriptionState } from "@/lib/subscription";
 import { uploadVideo, validateVideo } from "@/lib/storage";
-import { processAnalysis } from "@/lib/process-analysis";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -77,17 +76,16 @@ export async function POST(req: Request) {
     );
   }
 
+  // Draft — the player trims the clip on the next screen, then we process.
   const analysis = await prisma.analysis.create({
     data: {
       userId: session.user.id,
       skillKey,
       videoUrl,
-      status: "processing",
+      status: "draft",
     },
     select: { id: true },
   });
-
-  after(() => processAnalysis(analysis.id));
 
   return NextResponse.json({ id: analysis.id }, { status: 201 });
 }

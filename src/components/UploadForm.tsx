@@ -33,7 +33,7 @@ export function UploadForm({
         setSubmitting(false);
         return;
       }
-      router.push(`/analysis/${data.id}`);
+      router.push(`/analysis/${data.id}/trim`);
     } catch {
       setError("Network error during upload.");
       setSubmitting(false);
@@ -79,10 +79,10 @@ export function UploadForm({
         disabled={!file || submitting}
         className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 font-medium text-primary-fg hover:opacity-90 disabled:opacity-50"
       >
-        {submitting ? "Uploading & analyzing…" : "Analyze my technique"}
+        {submitting ? "Uploading…" : "Upload & trim"}
       </button>
       <p className="mt-2 text-xs text-muted">
-        Analysis usually takes 20–40 seconds after the upload finishes.
+        Next you&apos;ll trim the clip to the rep, then it&apos;s analyzed (~20–40s).
       </p>
     </div>
   );

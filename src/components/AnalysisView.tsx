@@ -55,6 +55,23 @@ export function AnalysisView({ id }: { id: string }) {
 
   const skill = getSkill(data.skillKey);
 
+  if (data.status === "draft") {
+    return (
+      <div>
+        <h1 className="text-xl font-bold">Finish trimming your clip</h1>
+        <p className="mt-2 text-sm text-muted">
+          This {data.skillName} clip hasn&apos;t been submitted yet.
+        </p>
+        <Link
+          href={`/analysis/${data.id}/trim`}
+          className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-fg"
+        >
+          Trim &amp; analyze →
+        </Link>
+      </div>
+    );
+  }
+
   if (data.status === "processing") {
     return <Skeleton label={`Analyzing your ${data.skillName}…`} />;
   }
@@ -111,6 +128,11 @@ export function AnalysisView({ id }: { id: string }) {
         controls
         className="mt-4 w-full rounded-xl border border-border bg-black"
       />
+      {data.trimStartSec != null && data.trimEndSec != null && (
+        <p className="mt-1 text-xs text-muted">
+          Analyzed {data.trimStartSec.toFixed(1)}s–{data.trimEndSec.toFixed(1)}s of the clip
+        </p>
+      )}
 
       <section className="mt-6">
         <h2 className="font-semibold">Summary</h2>
