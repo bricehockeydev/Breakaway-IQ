@@ -55,7 +55,7 @@ export const DRILLS: Drill[] = [
       "no heel-to-toe roll",
     ],
     description:
-      "Set the puck behind the back foot. Drag it along the ice the full length of the sweep, keeping it cupped, and only release once it's in the box out in front of your lead hand. Focus on heel-to-toe roll.",
+      "Set the puck behind the back foot. Drag it along the ice the full length of the sweep, keeping it cupped, and only release once it's in front of your front foot. Focus on heel-to-toe roll.",
     prescription: "4 sets of 15, 3x/week",
   },
   {

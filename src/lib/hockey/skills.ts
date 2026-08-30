@@ -41,6 +41,7 @@ export const SKILLS: Skill[] = [
         checkpoints: [
           "Good knee bend, athletic base",
           "Front shin perpendicular to the ice",
+          "Chest slightly forward, ~15° lean",
           "Hands roughly shoulder-width apart — not too close",
           "Hands out away from the body",
           "Puck starts back, off the heel of the blade",
@@ -69,7 +70,7 @@ export const SKILLS: Skill[] = [
         key: "release",
         name: "Release",
         checkpoints: [
-          "Puck releases in a box out in front of the lead hand",
+          "Puck releases in front of the front foot",
           "Puck rolls heel-to-toe off the blade with spin",
           "Wrists snap/roll at release",
         ],
