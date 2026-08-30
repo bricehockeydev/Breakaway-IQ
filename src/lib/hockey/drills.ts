@@ -55,7 +55,36 @@ export const DRILLS: Drill[] = [
       "no heel-to-toe roll",
     ],
     description:
-      "Set the puck behind the back foot. Drag it along the ice the full length of the sweep, keeping it cupped, and only release once it's past your front foot. Focus on heel-to-toe roll.",
+      "Set the puck behind the back foot. Drag it along the ice the full length of the sweep, keeping it cupped, and only release once it's in the box out in front of your lead hand. Focus on heel-to-toe roll.",
+    prescription: "4 sets of 15, 3x/week",
+  },
+  {
+    key: "hips-to-net",
+    name: "Hips-to-Net Finish",
+    skillKeys: ["wrist-shot", "snap-shot", "backhand-shot"],
+    targetsFlaws: [
+      "hips don't finish facing the net",
+      "no hip rotation",
+      "chest stays sideways",
+      "head not finishing on target",
+    ],
+    description:
+      "Shoot and freeze the finish for a two-count. Check that your belt buckle and chest are square to the net and your head is pointed at your target. Reset and repeat — groove the rotation before adding pace.",
+    prescription: "4 sets of 15, 3x/week",
+  },
+  {
+    key: "front-shin-shooting",
+    name: "Front-Shin Perpendicular Shooting",
+    skillKeys: ["wrist-shot", "snap-shot"],
+    targetsFlaws: [
+      "front shin not perpendicular to the ice",
+      "front leg straightens early",
+      "standing too tall on the shot",
+      "not enough knee bend",
+      "shooting off the back foot",
+    ],
+    description:
+      "Set up with your front shin straight up and down (perpendicular to the ice) and hold that shin angle all the way through the release — don't let the front knee straighten. Film from the side to check.",
     prescription: "4 sets of 15, 3x/week",
   },
   {
@@ -108,12 +137,14 @@ export const DRILLS: Drill[] = [
     skillKeys: ["wrist-shot", "snap-shot", "slap-shot"],
     targetsFlaws: [
       "hands too close together",
+      "hands too high or too low on the shaft",
       "top hand into body",
       "cramped shot",
       "no leverage",
+      "not enough stick flex",
     ],
     description:
-      "Shoot with a slightly wider hand spacing and the top hand pushed away from your body. The bottom hand should feel like it punches down/forward while the top hand pulls back.",
+      "Shoot with hands about shoulder-width apart and the top hand pushed away from your body. Hands too high or too low on the shaft kill the flex. Bottom hand punches down/forward (it's the engine), top hand pulls back.",
     prescription: "4 sets of 15, 3x/week",
   },
   {
@@ -263,7 +294,7 @@ export const DRILLS: Drill[] = [
       "high center of gravity",
     ],
     description:
-      "Hold a deep two-foot glide the length of the ice: ~90° knee bend, shins forward, chest up, back flat, eyes up. Then add slow strides while keeping that exact posture. If you stand up on the push, restart.",
+      "Hold a deep two-foot glide the length of the ice: ~135° knee angle, chest up, eyes up where you're going. Then add slow strides while keeping that exact posture. If you stand up on the push, restart.",
     prescription: "6 lengths of the ice, 3x/week",
   },
   {
