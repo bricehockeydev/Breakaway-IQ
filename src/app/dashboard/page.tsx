@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getSubscriptionState } from "@/lib/subscription";
+import { usingStripe } from "@/lib/stripe";
 import { getSkill } from "@/lib/hockey/skills";
 import { getProgressSummaries } from "@/lib/analyses";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
@@ -37,7 +39,9 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-6">
-        <SubscriptionCard initial={sub} />
+        <Suspense fallback={null}>
+          <SubscriptionCard initial={sub} billingMode={usingStripe() ? "stripe" : "stub"} />
+        </Suspense>
       </div>
 
       <h2 className="mt-10 text-lg font-semibold">Your progress</h2>

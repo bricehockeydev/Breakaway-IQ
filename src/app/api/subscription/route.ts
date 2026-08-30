@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
+import { usingStripe } from "@/lib/stripe";
 import {
   activateStubSubscription,
   cancelStubSubscription,
@@ -20,12 +21,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { action } = (await req.json().catch(() => ({}))) as { action?: string };
+  // Real billing goes through /api/checkout and /api/portal.
+  if (usingStripe()) {
+    return NextResponse.json(
+      { error: "Use checkout for billing changes." },
+      { status: 400 },
+    );
+  }
 
+  const { action } = (await req.json().catch(() => ({}))) as { action?: string };
   if (action === "cancel") {
     await cancelStubSubscription(session.user.id);
   } else {
-    // Stubbed checkout — no payment. Replace with Stripe Checkout later.
     await activateStubSubscription(session.user.id);
   }
 

@@ -12,6 +12,7 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "setup:ffmpeg": "npm rebuild ffmpeg-static",
+    "stripe:setup": "node --env-file=.env.local scripts/setup-stripe.ts",
     "test:frames": "node scripts/test-frames.ts"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "next-auth": "^5.0.0-beta.32",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "stripe": "^22.6.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {
@@ -49,6 +51,7 @@
     "msgpackr-extract@3.0.4": true,
     "prisma@6.19.3": true,
     "@prisma/engines@6.19.3": true,
-    "@prisma/client@6.19.3": true
+    "@prisma/client@6.19.3": true,
+    "stripe@22.6.0": true
   }
 }

@@ -1,9 +1,12 @@
+import type Stripe from "stripe";
 import { prisma } from "@/lib/db";
+import { mapStripeStatus } from "@/lib/stripe";
 
 export interface SubscriptionState {
-  status: "inactive" | "active" | "canceled";
+  status: "inactive" | "active" | "trialing" | "past_due" | "canceled";
   plan: string;
   currentPeriodEnd: Date | null;
+  cancelAtPeriodEnd: boolean;
   isActive: boolean;
 }
 
@@ -21,26 +24,48 @@ export async function getSubscriptionState(
     status,
     plan: sub?.plan ?? "monthly",
     currentPeriodEnd,
-    isActive: status === "active" && notExpired,
+    cancelAtPeriodEnd: sub?.cancelAtPeriodEnd ?? false,
+    isActive: (status === "active" || status === "trialing") && notExpired,
   };
 }
 
-/** Stub "checkout": activate a 30-day monthly subscription. Replace with Stripe. */
+/** Write a Stripe subscription object into our DB. Used by the webhook. */
+export async function upsertSubscriptionFromStripe(
+  userId: string,
+  sub: Stripe.Subscription,
+) {
+  const item = sub.items.data[0];
+  // `current_period_end` lives on the item in recent API versions, on the
+  // subscription in older ones.
+  const periodEndUnix =
+    item?.current_period_end ??
+    (sub as unknown as { current_period_end?: number }).current_period_end ??
+    null;
+
+  const data = {
+    status: mapStripeStatus(sub.status),
+    plan: "monthly",
+    stripeSubscriptionId: sub.id,
+    stripePriceId: item?.price.id ?? null,
+    cancelAtPeriodEnd: sub.cancel_at_period_end,
+    currentPeriodEnd: periodEndUnix ? new Date(periodEndUnix * 1000) : null,
+  };
+
+  return prisma.subscription.upsert({
+    where: { userId },
+    create: { userId, ...data },
+    update: data,
+  });
+}
+
+// --- Stub checkout (used only when Stripe isn't configured) ---
+
 export async function activateStubSubscription(userId: string) {
   const periodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
   return prisma.subscription.upsert({
     where: { userId },
-    create: {
-      userId,
-      status: "active",
-      plan: "monthly",
-      currentPeriodEnd: periodEnd,
-    },
-    update: {
-      status: "active",
-      plan: "monthly",
-      currentPeriodEnd: periodEnd,
-    },
+    create: { userId, status: "active", plan: "monthly", currentPeriodEnd: periodEnd },
+    update: { status: "active", plan: "monthly", currentPeriodEnd: periodEnd },
   });
 }
 
