@@ -43,34 +43,25 @@ function parseDuration(stderr: string): number | null {
   return Number(m[1]) * 3600 + Number(m[2]) * 60 + Number(m[3]);
 }
 
-async function download(url: string, dest: string): Promise<void> {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Failed to download video (${res.status})`);
-  }
-  const buf = Buffer.from(await res.arrayBuffer());
-  await writeFile(dest, buf);
-}
-
 /**
- * Download the clip and pull `count` evenly-spaced JPEG frames from it,
+ * Write the clip bytes to a temp file and pull `count` evenly-spaced JPEG frames,
  * skipping the first/last 8% (usually setup + walk-away).
  */
-export async function extractFrames(
-  videoUrl: string,
+export async function extractFramesFromBuffer(
+  bytes: Buffer,
   count = 10,
 ): Promise<FrameExtractionResult> {
   const workDir = await mkdtemp(join(tmpdir(), "skillsapp-"));
   const videoFile = join(workDir, "clip.mp4");
   try {
-    await download(videoUrl, videoFile);
+    await writeFile(videoFile, bytes);
     return await framesFromFile(videoFile, workDir, count);
   } finally {
     await rm(workDir, { recursive: true, force: true }).catch(() => {});
   }
 }
 
-/** Same as extractFrames but from a local file — used by scripts/test-frames.ts. */
+/** Same as above but from a local file path — used by scripts/test-frames.ts. */
 export async function extractFramesFromPath(
   videoFile: string,
   count = 10,

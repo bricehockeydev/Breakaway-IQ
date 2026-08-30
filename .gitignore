@@ -48,3 +48,6 @@ next-env.d.ts
 # scratch
 /tmp
 /tmp-clip.mp4
+
+# local video uploads (dev, when not using Vercel Blob)
+/uploads

@@ -26,8 +26,8 @@ Create `.env.local` (see `.env.example`) and fill in:
 
 | Var | Where to get it |
 |---|---|
-| `ANTHROPIC_API_KEY` | https://console.anthropic.com/settings/keys |
-| `BLOB_READ_WRITE_TOKEN` | Vercel dashboard → Storage → create a Blob store |
+| `ANTHROPIC_API_KEY` | https://console.anthropic.com/settings/keys — **required** |
+| `BLOB_READ_WRITE_TOKEN` | **Optional locally.** Unset → uploads go to `./uploads` on disk. Set it for prod: Vercel dashboard → Storage tab → Create → Blob |
 | `AUTH_SECRET` | already generated in `.env.local`; regenerate with `npx auth secret` |
 | `DATABASE_URL` | leave as `file:./dev.db` for local dev (lives in `.env`) |
 

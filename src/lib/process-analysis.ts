@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { getSkill } from "@/lib/hockey/skills";
-import { extractFrames } from "@/lib/frames";
+import { extractFramesFromBuffer } from "@/lib/frames";
+import { readVideoBytes } from "@/lib/storage";
 import { analyzeSkill } from "@/lib/claude";
 
 const FRAME_COUNT = 10;
@@ -21,7 +22,8 @@ export async function processAnalysis(analysisId: string): Promise<void> {
   }
 
   try {
-    const { durationSec, frames } = await extractFrames(analysis.videoUrl, FRAME_COUNT);
+    const bytes = await readVideoBytes(analysis.videoUrl);
+    const { durationSec, frames } = await extractFramesFromBuffer(bytes, FRAME_COUNT);
     const { result, usage } = await analyzeSkill(skill, frames);
 
     console.log(

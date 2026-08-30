@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getSkill } from "@/lib/hockey/skills";
 import { getSubscriptionState } from "@/lib/subscription";
-import { uploadVideo, validateVideo } from "@/lib/blob";
+import { uploadVideo, validateVideo } from "@/lib/storage";
 import { processAnalysis } from "@/lib/process-analysis";
 
 export const runtime = "nodejs";
@@ -70,9 +70,9 @@ export async function POST(req: Request) {
   try {
     videoUrl = await uploadVideo(session.user.id, skillKey, file);
   } catch (err) {
-    console.error("blob upload failed:", err);
+    console.error("video upload failed:", err);
     return NextResponse.json(
-      { error: "Video upload failed. Check BLOB_READ_WRITE_TOKEN." },
+      { error: "Video upload failed. Try again." },
       { status: 500 },
     );
   }
