@@ -25,22 +25,23 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "Start with feet together. Take a deliberate step toward the target with the front foot as you shoot, feeling weight move from back leg to front leg. Exaggerate the step at first.",
-    prescription: "4 sets of 10, 3x/week",
+    prescription: "4 sets of 15, 3x/week",
   },
   {
-    key: "kneeling-shots",
-    name: "Kneeling Shooting",
-    skillKeys: ["wrist-shot", "snap-shot"],
+    key: "single-leg-shooting",
+    name: "Single-Leg Shooting",
+    skillKeys: ["wrist-shot", "snap-shot", "backhand-shot"],
     targetsFlaws: [
+      "no weight transfer",
+      "shooting off back foot",
+      "poor balance",
       "arms-only shot",
-      "poor blade load",
-      "no stick flex",
-      "weak wrist snap",
-      "no puck spin",
+      "weak lower-body drive",
+      "straightening the front leg early",
     ],
     description:
-      "On both knees, take shots using only hands, wrists and stick flex. Removes the legs so you're forced to load the blade and snap the release.",
-    prescription: "3 sets of 15, 3x/week",
+      "Balance on your front leg only, back foot off the ice, and shoot. Forces you to hold a bent front knee, keep your weight forward through the release, and drive the shot from the hip instead of the arms.",
+    prescription: "4 sets of 15, 3x/week",
   },
   {
     key: "puck-drag-release",
@@ -55,7 +56,7 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "Set the puck behind the back foot. Drag it along the ice the full length of the sweep, keeping it cupped, and only release once it's past your front foot. Focus on heel-to-toe roll.",
-    prescription: "4 sets of 10, 3x/week",
+    prescription: "4 sets of 15, 3x/week",
   },
   {
     key: "target-shooting",
@@ -69,7 +70,7 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "Hang targets in the four corners of the net. Call your corner before each shot and finish with the blade pointed exactly where you aimed. Track make percentage.",
-    prescription: "5 sets of 8 (2 per corner), 2–3x/week",
+    prescription: "4 sets of 15 (rotate corners), 2–3x/week",
   },
   {
     key: "one-inch-behind",
@@ -83,7 +84,7 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "Place a coin or tape mark ~1 inch behind the puck. Practice striking the mark so the shaft loads against the ice and whips through the puck. Slow-motion first, then build speed.",
-    prescription: "3 sets of 10, 2x/week",
+    prescription: "4 sets of 15, 2x/week",
   },
   {
     key: "backhand-scoop",
@@ -97,7 +98,7 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "From in tight, scoop pucks over a stick laid flat 3 feet away, then over a low bench. Finish every rep with the blade following up toward the crossbar.",
-    prescription: "4 sets of 10, 3x/week",
+    prescription: "4 sets of 15, 3x/week",
   },
 
   // --- Shooting: mechanics / hands ---
@@ -113,7 +114,7 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "Shoot with a slightly wider hand spacing and the top hand pushed away from your body. The bottom hand should feel like it punches down/forward while the top hand pulls back.",
-    prescription: "3 sets of 12, 3x/week",
+    prescription: "4 sets of 15, 3x/week",
   },
   {
     key: "quick-release-catch-shoot",
@@ -127,7 +128,7 @@ export const DRILLS: Drill[] = [
     ],
     description:
       "Have a partner (or a rebounder board) feed you pucks. Shoot within half a second of the puck arriving — minimal backswing, all snap. Deception over power.",
-    prescription: "5 sets of 10, 2–3x/week",
+    prescription: "4 sets of 15, 2–3x/week",
   },
 
   // --- Stickhandling / dekes ---
@@ -217,6 +218,68 @@ export const DRILLS: Drill[] = [
     description:
       "Crossovers around the circle with an emphasis on snapping the pushed foot back under your hips as fast as possible, feet returning close together before the next push. Count pushes per lap and increase.",
     prescription: "4 laps each direction, 3x/week",
+  },
+
+  // --- Skating: forward stride ---
+  {
+    key: "stride-full-extension",
+    name: "Full-Extension Stride Push",
+    skillKeys: ["forward-stride"],
+    targetsFlaws: [
+      "short stride",
+      "no full leg extension",
+      "pushing back instead of to the side",
+      "toe not finishing pointed",
+      "choppy stride",
+    ],
+    description:
+      "Long, slow strides down the ice. On every push drive the leg out to 45° and finish fully extended with the toe snapping out, then hold a one-second glide on the other leg before the next push. Feel the whole blade push, not just the toe.",
+    prescription: "6 lengths of the ice, 3x/week",
+  },
+  {
+    key: "stride-knee-drive-recovery",
+    name: "Knee-Drive Recovery",
+    skillKeys: ["forward-stride"],
+    targetsFlaws: [
+      "slow recovery",
+      "foot recovers wide",
+      "no knee drive",
+      "recovering behind the body",
+      "gliding too long between strides",
+    ],
+    description:
+      "After each push, drive the recovering knee forward and land the foot back under your center of mass — not out to the side. Think 'knee to the boards you're skating toward.' Build to a quick, continuous tempo.",
+    prescription: "6 lengths of the ice, 3x/week",
+  },
+  {
+    key: "stride-posture-holds",
+    name: "Low Athletic Posture Holds",
+    skillKeys: ["forward-stride"],
+    targetsFlaws: [
+      "standing too tall",
+      "not enough knee bend",
+      "bent at the waist",
+      "chest down",
+      "high center of gravity",
+    ],
+    description:
+      "Hold a deep two-foot glide the length of the ice: ~90° knee bend, shins forward, chest up, back flat, eyes up. Then add slow strides while keeping that exact posture. If you stand up on the push, restart.",
+    prescription: "6 lengths of the ice, 3x/week",
+  },
+  {
+    key: "stride-arm-drive",
+    name: "Front-to-Back Arm Drive",
+    skillKeys: ["forward-stride"],
+    targetsFlaws: [
+      "arms crossing the body",
+      "stick-hand not driving",
+      "no arm swing",
+      "upper body rotating side to side",
+      "tense shoulders",
+    ],
+    description:
+      "Stride with the arms swinging straight front-to-back in line with your direction of travel (not across the body), staying relaxed. On a full-speed stride the arms should match the leg tempo and add drive, not just balance.",
+    prescription: "4 lengths of the ice, 2–3x/week",
   },
 ];
 

@@ -95,45 +95,47 @@ export const SKILLS: Skill[] = [
     phases: [
       {
         key: "setup",
-        name: "Setup",
+        name: "Setup & Hands",
         checkpoints: [
-          "Puck slightly behind mid-stance",
-          "Hands set with bottom hand ready to punch down",
-          "Athletic knee bend",
+          "Puck in the shooting box — out in front and close to the body, not way out to the side",
+          "Hands away from the body (top hand off the hip), elbows up",
+          "Athletic knee bend, weight loaded slightly on the back foot",
+          "Eyes up and scanning, not locked on the puck",
         ],
       },
       {
         key: "cock",
         name: "Short Backswing",
         checkpoints: [
-          "Small, compact backswing (blade rises only slightly)",
-          "No big windup — the shot should be deceptive",
+          "Small, compact backswing — blade rises only slightly",
+          "No big windup — the shot should be deceptive and quick",
         ],
       },
       {
         key: "load",
-        name: "Downward Load",
+        name: "Downward Load & Weight Transfer",
         checkpoints: [
-          "Bottom hand drives the blade down into the ice just behind the puck",
-          "Shaft visibly flexes",
-          "Weight shifts to the front foot",
+          "Bottom hand (the engine) drives the blade down into the ice just behind the puck",
+          "Push down through the shaft to load visible stick flex",
+          "Weight transfers from the back foot to the front foot",
         ],
       },
       {
         key: "release",
         name: "Snap & Release",
         checkpoints: [
-          "Sharp wrist snap as the blade contacts the puck",
-          "Puck leaves heel-to-toe with spin",
-          "Quick, no long sweep",
+          "Both wrists snap as the blade contacts the puck",
+          "Top hand pushes out then pulls back in to whip the blade through",
+          "Puck leaves heel-to-toe with spin — quick, no long sweep",
         ],
       },
       {
         key: "follow-through",
         name: "Follow-through",
         checkpoints: [
-          "Blade finishes pointed at the target",
-          "Compact, balanced finish",
+          "Everything drives toward the target — hips, chest, blade all finish facing it",
+          "Blade points at the target after release",
+          "Weight fully on the front foot, compact and balanced finish",
         ],
       },
     ],
@@ -325,6 +327,68 @@ export const SKILLS: Skill[] = [
         checkpoints: [
           "Quick foot turnover, no gliding between pushes",
           "Upper body stays quiet and balanced over the circle",
+        ],
+      },
+    ],
+  },
+  {
+    key: "forward-stride",
+    name: "Forward Stride",
+    category: "skating",
+    blurb: "Straight-line speed — deep posture, full side extension, quick recovery under the body.",
+    recordingInstructions: [
+      "Film from the FRONT (skating toward the camera) or the SIDE — either works; front shows knee tracking, foot recovery and arm swing, side shows knee bend, extension and posture.",
+      "Skate 4–6 hard strides straight at or past the camera. Keep the whole body in frame.",
+      "Under 8 seconds. Game-pace strides, not a slow glide.",
+    ],
+    phases: [
+      {
+        key: "posture",
+        name: "Posture & Stance",
+        checkpoints: [
+          "Deep knee bend (~90°), shins angled forward over the toes",
+          "Chest up, back flat — bend from the knees and ankles, not the waist",
+          "Eyes up, head still",
+          "Weight centered over the mid-foot, not on the heels",
+        ],
+      },
+      {
+        key: "push",
+        name: "Push & Extension",
+        checkpoints: [
+          "Push directs out to the SIDE (~45°), not straight back",
+          "Full leg extension — hip, knee and ankle all straighten",
+          "Whole blade pushes, finishing with a toe snap",
+          "Drive leg fully loaded before the push (no early release)",
+        ],
+      },
+      {
+        key: "recovery",
+        name: "Recovery",
+        checkpoints: [
+          "Recovering knee drives forward, not out to the side",
+          "Foot returns UNDER the center of mass before it re-plants",
+          "Quick recovery — foot doesn't trail behind the body",
+          "Feet pass close together between strides",
+        ],
+      },
+      {
+        key: "glide-balance",
+        name: "Glide & Balance",
+        checkpoints: [
+          "Balanced single-leg glide on a flat blade after each push",
+          "Hips stay level — no big drop toward the gliding side",
+          "No ankle wobble or upper-body sway to catch balance",
+        ],
+      },
+      {
+        key: "arms",
+        name: "Arms & Upper Body",
+        checkpoints: [
+          "Arms drive straight front-to-back in the direction of travel",
+          "Arms don't swing across the body",
+          "Shoulders relaxed and quiet, minimal side-to-side rotation",
+          "Arm tempo matches leg tempo at speed",
         ],
       },
     ],
