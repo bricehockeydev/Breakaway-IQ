@@ -189,6 +189,16 @@ export function AnalysisView({ id }: { id: string }) {
                 </p>
                 <p className="mt-1 text-sm text-muted">{drill.description}</p>
                 <p className="mt-1 text-xs font-medium text-primary">{drill.prescription}</p>
+                {drill.videoUrl && (
+                  <a
+                    href={drill.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-block text-xs font-medium text-primary underline"
+                  >
+                    ▶ Watch the drill
+                  </a>
+                )}
               </div>
             );
           })}

@@ -8,6 +8,8 @@ export interface Drill {
   targetsFlaws: string[];
   description: string;
   prescription: string; // sets / reps / frequency
+  /** Optional demo video — a YouTube URL or an uploaded clip URL. */
+  videoUrl?: string;
 }
 
 export const DRILLS: Drill[] = [
@@ -84,7 +86,7 @@ export const DRILLS: Drill[] = [
       "puck travels too far before release",
     ],
     description:
-      "Tape a 2 ft × 2 ft box on the floor in front of your shooting side. Every rep the puck must start and release inside that box — no sweeping it out wide. Then put a second puck in the box as an obstacle and shoot around it, forcing a tight, quick release.",
+      "Draw a 2 ft × 2 ft box on the ice in front of your shooting side (marker, or four pucks as corners). Every rep the puck must start and release inside that box — no sweeping it out wide. Then put a puck in the middle as an obstacle and shoot around it, forcing a tight, quick release.",
     prescription: "4 sets of 15, 3x/week",
   },
   {
@@ -175,6 +177,62 @@ export const DRILLS: Drill[] = [
     description:
       "Have a partner (or a rebounder board) feed you pucks. Shoot within half a second of the puck arriving — minimal backswing, all snap. Deception over power.",
     prescription: "4 sets of 15, 2–3x/week",
+  },
+  {
+    key: "two-stick-channel",
+    name: "Two-Stick Channel",
+    skillKeys: ["wrist-shot", "snap-shot"],
+    targetsFlaws: [
+      "puck held too far to the side",
+      "long sweep",
+      "puck drags away from the body",
+      "poor hand path",
+      "slow release",
+    ],
+    description:
+      "Lay two sticks on the ice pointing at the net, a little wider than a puck apart. Shoot with the puck travelling straight down that channel. Feels cramped at first — that's the point: it forces the puck to stay close and your hands and feet to do the work.",
+    prescription: "4 sets of 15, 2–3x/week",
+  },
+  {
+    key: "seventy-percent-mechanics",
+    name: "70% Mechanics Reps",
+    skillKeys: ["wrist-shot", "snap-shot", "backhand-shot"],
+    targetsFlaws: [
+      "muscling the shot",
+      "poor mechanics under effort",
+      "rushing reps",
+      "inconsistent release",
+    ],
+    description:
+      "Stationary, shoot at about 70% effort and think only about the checkpoints — puck behind the back foot, heel-to-toe roll, weight to the front leg, blade finishing at the target. Slow, clean reps groove the pattern faster than max-effort ones.",
+    prescription: "3 sets of 20, 3–4x/week",
+  },
+  {
+    key: "shoot-around-obstacle",
+    name: "Shoot Around a Stick",
+    skillKeys: ["wrist-shot", "snap-shot", "slap-shot"],
+    targetsFlaws: [
+      "shot gets blocked",
+      "can't change the release angle",
+      "predictable release point",
+      "long sweep",
+    ],
+    description:
+      "Plant a spare stick upright (or lay one flat) between you and the net as an obstacle. Release your shot around it — over, or off to one side — without a big windup. Trains getting the puck through traffic and disguising where the shot comes from. Works on-ice, off-ice, or on rollerblades.",
+    prescription: "4 sets of 12, 2x/week",
+  },
+  {
+    key: "rapid-fire",
+    name: "Rapid Fire",
+    skillKeys: ["wrist-shot", "snap-shot"],
+    targetsFlaws: [
+      "slow reset between shots",
+      "mechanics break down when tired",
+      "slow release",
+    ],
+    description:
+      "Line up 10 pucks. Shoot each one as fast as you can pull the next into position — but every rep must still have a clean release and a follow-through at the target. Rest, repeat. Builds a quick release that holds up under fatigue.",
+    prescription: "5 sets of 10, 2x/week",
   },
 
   // --- Stickhandling / dekes ---
@@ -326,6 +384,48 @@ export const DRILLS: Drill[] = [
     description:
       "Stride with the arms swinging straight front-to-back in line with your direction of travel (not across the body), staying relaxed. On a full-speed stride the arms should match the leg tempo and add drive, not just balance.",
     prescription: "4 lengths of the ice, 2–3x/week",
+  },
+  {
+    key: "one-leg-push-glide",
+    name: "One-Leg Push & Glide",
+    skillKeys: ["forward-stride"],
+    targetsFlaws: [
+      "short stride",
+      "no full leg extension",
+      "choppy stride",
+      "pushing back instead of to the side",
+    ],
+    description:
+      "Push once with one leg, then glide the length of the ice on the other in a straight line, holding balance. Push out to the side, extend fully, snap the toe. Alternate legs each length. All about the quality of a single push.",
+    prescription: "6 lengths each leg, 3x/week",
+  },
+  {
+    key: "toe-drag-stride",
+    name: "Toe-Drag Stride",
+    skillKeys: ["forward-stride"],
+    targetsFlaws: [
+      "no full leg extension",
+      "toe not finishing pointed",
+      "cutting the push short",
+      "short stride",
+    ],
+    description:
+      "After each push, drag the toe of the pushing skate along the ice behind you before you recover it. Exaggerates and grooves the feeling of a complete extension so you stop cutting the stride short.",
+    prescription: "6 lengths of the ice, 3x/week",
+  },
+  {
+    key: "edge-holds",
+    name: "Inside / Outside Edge Holds",
+    skillKeys: ["forward-stride", "crossover-stride"],
+    targetsFlaws: [
+      "ankle wobble",
+      "weak edges",
+      "poor single-leg balance",
+      "loses balance on the glide",
+    ],
+    description:
+      "Glide the length of the ice on one foot holding an inside edge, then again on an outside edge, each leg. Build the ankle and edge strength the stride and crossovers depend on. Progress to slow figure-eights on each edge.",
+    prescription: "2 lengths per edge per leg, 3x/week",
   },
 ];
 
