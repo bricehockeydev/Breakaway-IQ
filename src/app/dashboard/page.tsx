@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getSubscriptionState } from "@/lib/subscription";
 import { getSkill } from "@/lib/hockey/skills";
+import { getProgressSummaries } from "@/lib/analyses";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
 import { StatusBadge } from "@/components/StatusBadge";
 
@@ -11,12 +12,13 @@ export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
 
-  const [sub, analyses] = await Promise.all([
+  const [sub, summaries, recent] = await Promise.all([
     getSubscriptionState(session.user.id),
+    getProgressSummaries(session.user.id),
     prisma.analysis.findMany({
       where: { userId: session.user.id },
       orderBy: { createdAt: "desc" },
-      take: 50,
+      take: 8,
     }),
   ]);
 
@@ -38,10 +40,10 @@ export default async function DashboardPage() {
         <SubscriptionCard initial={sub} />
       </div>
 
-      <h2 className="mt-10 text-lg font-semibold">Your analyses</h2>
-      {analyses.length === 0 ? (
+      <h2 className="mt-10 text-lg font-semibold">Your progress</h2>
+      {summaries.length === 0 ? (
         <p className="mt-3 rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
-          No analyses yet.{" "}
+          No completed analyses yet.{" "}
           {sub.isActive ? (
             <Link href="/skills" className="font-medium text-primary underline">
               Pick a skill to get started.
@@ -51,27 +53,66 @@ export default async function DashboardPage() {
           )}
         </p>
       ) : (
-        <ul className="mt-3 divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
-          {analyses.map((a) => {
-            const skill = getSkill(a.skillKey);
-            return (
-              <li key={a.id}>
-                <Link
-                  href={`/analysis/${a.id}`}
-                  className="flex items-center justify-between px-4 py-3 hover:bg-background"
-                >
-                  <div>
-                    <div className="font-medium">{skill?.name ?? a.skillKey}</div>
-                    <div className="text-xs text-muted">
-                      {new Date(a.createdAt).toLocaleString()}
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {summaries.map((s) => (
+            <Link
+              key={s.skillKey}
+              href={`/progress/${s.skillKey}`}
+              className="rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary"
+            >
+              <div className="flex items-baseline justify-between">
+                <span className="font-semibold">{s.skillName}</span>
+                <span className="text-lg font-bold">{s.latestScore.toFixed(1)}</span>
+              </div>
+              <div className="mt-1 flex items-center gap-2 text-xs text-muted">
+                <span>
+                  {s.count} {s.count === 1 ? "analysis" : "analyses"}
+                </span>
+                {s.count >= 2 && (
+                  <span
+                    className={
+                      s.delta > 0
+                        ? "text-emerald-600"
+                        : s.delta < 0
+                          ? "text-rose-600"
+                          : ""
+                    }
+                  >
+                    {s.delta > 0 ? `▲ +${s.delta}` : s.delta < 0 ? `▼ ${s.delta}` : "no change"}{" "}
+                    since first
+                  </span>
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {recent.length > 0 && (
+        <>
+          <h2 className="mt-10 text-lg font-semibold">Recent activity</h2>
+          <ul className="mt-3 divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
+            {recent.map((a) => {
+              const skill = getSkill(a.skillKey);
+              return (
+                <li key={a.id}>
+                  <Link
+                    href={`/analysis/${a.id}`}
+                    className="flex items-center justify-between px-4 py-3 hover:bg-background"
+                  >
+                    <div>
+                      <div className="font-medium">{skill?.name ?? a.skillKey}</div>
+                      <div className="text-xs text-muted">
+                        {new Date(a.createdAt).toLocaleString()}
+                      </div>
                     </div>
-                  </div>
-                  <StatusBadge status={a.status} />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                    <StatusBadge status={a.status} />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
     </div>
   );

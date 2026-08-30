@@ -5,7 +5,13 @@ import type { NextAuthConfig } from "next-auth";
  * middleware loads. The full config (with the Credentials provider) lives in
  * `src/auth.ts` and is used by server components / route handlers.
  */
-const PROTECTED_PREFIXES = ["/dashboard", "/skills", "/analyze", "/analysis"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/skills",
+  "/analyze",
+  "/analysis",
+  "/progress",
+];
 
 export const authConfig = {
   pages: {

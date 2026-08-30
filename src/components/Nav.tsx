@@ -8,9 +8,12 @@ export async function Nav() {
 
   return (
     <header className="border-b border-border bg-surface">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href={signedIn ? "/dashboard" : "/"} className="font-semibold tracking-tight">
-          Breakaway<span className="text-accent"> IQ</span>
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3">
+        <Link
+          href={signedIn ? "/dashboard" : "/"}
+          className="shrink-0 whitespace-nowrap font-semibold tracking-tight"
+        >
+          Breakaway<span className="text-accent">&nbsp;IQ</span>
         </Link>
 
         <nav className="flex items-center gap-4 text-sm">
