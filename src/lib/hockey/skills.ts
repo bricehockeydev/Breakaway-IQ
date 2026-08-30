@@ -41,7 +41,7 @@ export const SKILLS: Skill[] = [
         checkpoints: [
           "Good knee bend, athletic base",
           "Front shin perpendicular to the ice",
-          "Chest slightly forward, ~15° lean",
+          "Chest forward over the puck, ~20° lean",
           "Hands roughly shoulder-width apart — not too close",
           "Hands out away from the body",
           "Puck starts back, off the heel of the blade",
