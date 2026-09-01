@@ -16,6 +16,7 @@ export function DrillVideo({
   explicitUrl?: string;
 }) {
   const [hidden, setHidden] = useState(false);
+  const [extIdx, setExtIdx] = useState(0);
 
   if (explicitUrl) {
     const isYouTube = /youtu\.?be/.test(explicitUrl);
@@ -43,12 +44,19 @@ export function DrillVideo({
 
   if (hidden) return null;
 
+  // Try common extensions in order; hide once none work.
+  const exts = ["mp4", "mov", "webm"];
+  const src = `/drills/${drillKey}.${exts[extIdx]}`;
+
   return (
     <video
-      src={`/drills/${drillKey}.mp4`}
+      key={src}
+      src={src}
       controls
       preload="none"
-      onError={() => setHidden(true)}
+      onError={() =>
+        extIdx < exts.length - 1 ? setExtIdx(extIdx + 1) : setHidden(true)
+      }
       className="mt-2 w-full max-w-sm rounded-lg border border-border bg-black"
     />
   );
