@@ -51,3 +51,7 @@ next-env.d.ts
 
 # local video uploads (dev, when not using Vercel Blob)
 /uploads
+
+# drill demo videos (drop .mp4 files here, named by drill key)
+/public/drills/*
+!/public/drills/.gitkeep

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { AnalysisDTO } from "@/types/analysis";
 import { getSkill } from "@/lib/hockey/skills";
 import { getDrill } from "@/lib/hockey/drills";
+import { DrillVideo } from "@/components/DrillVideo";
 
 export function AnalysisView({ id }: { id: string }) {
   const [data, setData] = useState<AnalysisDTO | null>(null);
@@ -194,16 +195,7 @@ export function AnalysisView({ id }: { id: string }) {
                 </p>
                 <p className="mt-1 text-sm text-muted">{drill.description}</p>
                 <p className="mt-1 text-xs font-medium text-primary">{drill.prescription}</p>
-                {drill.videoUrl && (
-                  <a
-                    href={drill.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-block text-xs font-medium text-primary underline"
-                  >
-                    ▶ Watch the drill
-                  </a>
-                )}
+                <DrillVideo drillKey={rd.drillKey} explicitUrl={drill.videoUrl} />
               </div>
             );
           })}
