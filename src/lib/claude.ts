@@ -9,12 +9,17 @@ const MODEL = "claude-opus-5";
 
 const phaseAssessmentSchema = z.object({
   phaseKey: z.string().describe("The phase key being assessed"),
+  visible: z
+    .boolean()
+    .describe("true only if you can clearly see this phase well enough to judge it in the frames"),
   whatWentWell: z
     .string()
-    .describe("What the player does well in this phase, specific. Empty string if nothing stands out."),
+    .describe("What the player does well in this phase, specific. Empty string if nothing stands out or not visible."),
   whatToFix: z
     .string()
-    .describe("The specific thing to fix in this phase. Empty string if this phase looks clean."),
+    .describe(
+      "The specific flaw to fix in this phase — ONLY if you can clearly see it in the frames. Empty string if the phase looks correct, or if you can't judge it. Never write a fix that is hedged with 'appears to' / 'looks like' / 'can't confirm'.",
+    ),
 });
 
 const recommendedDrillSchema = z.object({
@@ -35,8 +40,14 @@ export const analysisResultSchema = z.object({
   phases: z.array(phaseAssessmentSchema),
   keyFlaws: z
     .array(z.string())
-    .describe("The 1–3 highest-priority things to fix, most important first"),
-  recommendedDrills: z.array(recommendedDrillSchema).min(1).max(4),
+    .max(3)
+    .describe(
+      "The genuine, clearly-visible issues to fix, worst first. 0 if the rep is clean or unassessable. Never pad this to reach a number.",
+    ),
+  recommendedDrills: z
+    .array(recommendedDrillSchema)
+    .max(4)
+    .describe("Drills for the flaws in keyFlaws. Empty if there are no real flaws."),
   coachingNotes: z
     .string()
     .describe("A short paragraph of extra coaching cues the player can think about"),
@@ -78,27 +89,44 @@ frames, not each frame in isolation.
 
 Skill overview: ${skill.blurb}
 
-Assess these phases against the "good technique" checkpoints. For each phase, say
-what the player does well and the specific thing to fix (or leave the fix empty if
-the phase looks clean). Do NOT give scores, grades, ratings, or numbers — this is a
-technique breakdown, not a report card.
+Assess these phases against the "good technique" checkpoints:
 
 ${phaseText}
 
 DRILL CATALOG — you may ONLY recommend drills from this list, by key. Never invent a
-drill. Pick 1–4 that directly address the flaws you identified, most important first:
+drill. Recommend only drills that address a flaw you actually listed in keyFlaws.
 
 ${drillCatalogFor(skill.key)}
 
-Rules:
-- If the clip is unusable (too dark, blurry, wrong angle, player/puck out of frame,
-  clip too short to show the motion), set filmingUsable=false, explain how to re-film
-  in filmingNotes, and still fill the other fields with your best partial read.
-- Be specific and concrete. "Rotate your hips more" not "work on power".
-- Base everything on what you can actually see. Don't hallucinate detail that isn't
-  in the frames.
-- No scores, grades, ratings, letter grades, or numbers out of 10 anywhere.
-- Tone: direct and useful, the way a good coach talks to a committed player.`;
+HOW TO ASSESS — read this carefully:
+
+1. Only report a flaw you can CLEARLY SEE in the frames. If a phase looks correct,
+   set whatToFix to "". If you cannot see a phase well enough to judge it (subject
+   too small, wrong angle, motion blur, phase happens between sampled frames), set
+   visible=false and whatToFix="". A phase you can't assess is NOT a phase with a
+   problem — do not guess one.
+
+2. Never write a fix that you then hedge. If your instinct is "appears to release
+   early" or "looks like the chest drops" or "can't confirm full extension" — you
+   do not actually see it. Leave it empty.
+
+3. Assume competence. Many players filmed for this are skilled. A clean rep should
+   come back with few or zero flaws. Do not manufacture 3 fixes because there are 3
+   slots. keyFlaws can and should be empty for a good rep.
+
+4. If filmingUsable=false: fill filmingNotes with how to re-film, keep every phase
+   visible=false with empty whatToFix unless something is genuinely unmistakable,
+   and keyFlaws should contain ONLY the filming problem (one entry). Do not produce
+   a full technique critique off an unusable clip.
+
+5. When you do flag something, be specific and concrete: "front knee straightens
+   before the puck leaves" not "work on your legs".
+
+6. No scores, grades, ratings, or numbers out of 10 anywhere. This is a technique
+   breakdown, not a report card.
+
+Tone: direct and useful, the way a good coach talks to a committed player — but a
+good coach doesn't invent problems that aren't there.`;
 }
 
 let client: Anthropic | null = null;

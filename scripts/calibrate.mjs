@@ -5,7 +5,7 @@
 //
 //   node --env-file=.env.local scripts/calibrate.mjs
 
-import { readdir, mkdir, writeFile, readFile } from "node:fs/promises";
+import { readdir, mkdir, writeFile } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { getSkill } from "../src/lib/hockey/skills.ts";
 import { extractFramesFromPath } from "../src/lib/frames.ts";

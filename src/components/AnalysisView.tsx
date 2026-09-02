@@ -138,14 +138,21 @@ export function AnalysisView({ id }: { id: string }) {
 
       <section className="mt-6">
         <h2 className="font-semibold">Top things to fix</h2>
-        <ol className="mt-2 space-y-1">
-          {r.keyFlaws.map((flaw, i) => (
-            <li key={i} className="flex gap-2 text-sm">
-              <span className="font-semibold text-accent">{i + 1}.</span>
-              <span>{flaw}</span>
-            </li>
-          ))}
-        </ol>
+        {r.keyFlaws.length === 0 ? (
+          <p className="mt-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+            Nothing to flag on this rep — the visible technique looks clean. Keep
+            grooving it.
+          </p>
+        ) : (
+          <ol className="mt-2 space-y-1">
+            {r.keyFlaws.map((flaw, i) => (
+              <li key={i} className="flex gap-2 text-sm">
+                <span className="font-semibold text-accent">{i + 1}.</span>
+                <span>{flaw}</span>
+              </li>
+            ))}
+          </ol>
+        )}
       </section>
 
       <section className="mt-6">
@@ -154,7 +161,9 @@ export function AnalysisView({ id }: { id: string }) {
           {r.phases.map((p) => {
             const phaseName =
               skill?.phases.find((sp) => sp.key === p.phaseKey)?.name ?? p.phaseKey;
-            const clean = !p.whatToFix?.trim();
+            const notVisible = p.visible === false;
+            const hasFix = !!p.whatToFix?.trim();
+            const clean = !notVisible && !hasFix;
             return (
               <div key={p.phaseKey} className="rounded-xl border border-border bg-surface p-4">
                 <div className="flex items-center gap-2">
@@ -164,13 +173,18 @@ export function AnalysisView({ id }: { id: string }) {
                       clean
                     </span>
                   )}
+                  {notVisible && (
+                    <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-600">
+                      not visible in this clip
+                    </span>
+                  )}
                 </div>
                 {p.whatWentWell?.trim() && (
                   <p className="mt-1 text-sm text-emerald-700">
                     <span className="font-medium">Working:</span> {p.whatWentWell}
                   </p>
                 )}
-                {!clean && (
+                {hasFix && (
                   <p className="mt-1 text-sm text-rose-700">
                     <span className="font-medium">Fix:</span> {p.whatToFix}
                   </p>
@@ -181,6 +195,7 @@ export function AnalysisView({ id }: { id: string }) {
         </div>
       </section>
 
+      {r.recommendedDrills.length > 0 && (
       <section className="mt-6">
         <h2 className="font-semibold">Your drills</h2>
         <div className="mt-2 space-y-3">
@@ -201,6 +216,7 @@ export function AnalysisView({ id }: { id: string }) {
           })}
         </div>
       </section>
+      )}
 
       <section className="mt-6 mb-4">
         <h2 className="font-semibold">Coaching notes</h2>

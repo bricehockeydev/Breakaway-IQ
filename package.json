@@ -13,9 +13,10 @@
     "db:studio": "prisma studio",
     "setup:ffmpeg": "npm rebuild ffmpeg-static",
     "stripe:setup": "node --env-file=.env.local scripts/setup-stripe.ts",
-    "drills:list": "node scripts/list-drills.mjs",
-    "calibrate": "node --env-file=.env.local scripts/calibrate.mjs",
-    "test:frames": "node scripts/test-frames.ts"
+    "drills:list": "tsx scripts/list-drills.mjs",
+    "calibrate": "tsx --env-file=.env.local scripts/calibrate.mjs",
+    "rerun": "tsx --env-file=.env.local scripts/rerun.mjs",
+    "test:frames": "tsx scripts/test-frames.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.122.0",
@@ -43,6 +44,7 @@
     "eslint-config-next": "16.3.3",
     "prisma": "6.19.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   },
   "allowScripts": {
@@ -54,6 +56,7 @@
     "prisma@6.19.3": true,
     "@prisma/engines@6.19.3": true,
     "@prisma/client@6.19.3": true,
-    "stripe@22.6.0": true
+    "stripe@22.6.0": true,
+    "tsx@4.23.13": true
   }
 }
