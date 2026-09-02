@@ -16,6 +16,7 @@
     "drills:list": "tsx scripts/list-drills.mjs",
     "calibrate": "tsx --env-file=.env.local scripts/calibrate.mjs",
     "rerun": "tsx --env-file=.env.local scripts/rerun.mjs",
+    "shift": "tsx --env-file=.env.local scripts/shift.mjs",
     "test:frames": "tsx scripts/test-frames.ts"
   },
   "dependencies": {

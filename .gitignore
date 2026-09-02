@@ -58,3 +58,6 @@ next-env.d.ts
 
 # calibration clips (local only)
 /calibration
+
+# game shift clips (local only, experimental)
+/shifts
