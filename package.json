@@ -14,6 +14,7 @@
     "setup:ffmpeg": "npm rebuild ffmpeg-static",
     "stripe:setup": "node --env-file=.env.local scripts/setup-stripe.ts",
     "drills:list": "node scripts/list-drills.mjs",
+    "calibrate": "node --env-file=.env.local scripts/calibrate.mjs",
     "test:frames": "node scripts/test-frames.ts"
   },
   "dependencies": {

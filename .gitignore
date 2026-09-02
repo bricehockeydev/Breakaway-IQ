@@ -55,3 +55,6 @@ next-env.d.ts
 # drill demo videos (drop .mp4 files here, named by drill key)
 /public/drills/*
 !/public/drills/.gitkeep
+
+# calibration clips (local only)
+/calibration
