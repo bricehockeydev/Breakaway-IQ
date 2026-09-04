@@ -321,6 +321,7 @@ export const SKILLS: Skill[] = [
         checkpoints: [
           "Feet shoulder-width apart, knees slightly bent",
           "Weight over the balls of the feet, chest up, nose over toes",
+          "Weight is on the front of the blade (toward the toes) — check where the steel contacts the ice, not on the heel",
           "Outside edge of the inside skate, inside edge of the outside skate",
         ],
       },
@@ -369,7 +370,7 @@ export const SKILLS: Skill[] = [
           "Roughly 135° angle at the knee (between the thigh and the calf)",
           "Chest up",
           "Head looking where the player wants to go",
-          "Weight centered over the mid-foot, not on the heels",
+          "Weight is on the front of the blade (toward the toes) — check where the steel contacts the ice, not on the heel",
         ],
       },
       {

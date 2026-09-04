@@ -318,6 +318,7 @@ export const DRILLS: Drill[] = [
       "not enough knee bend",
       "high center of gravity",
       "poor posture on edges",
+      "weight back on the heels",
     ],
     description:
       "Hold a deep two-foot glide around the circle on the correct edges (outside edge inside skate) for as long as possible, chest up. Then add slow crossovers keeping that depth.",
@@ -379,6 +380,7 @@ export const DRILLS: Drill[] = [
       "bent at the waist",
       "chest down",
       "high center of gravity",
+      "weight back on the heels",
     ],
     description:
       "Hold a deep two-foot glide the length of the ice: ~135° knee angle, chest up, eyes up where you're going. Then add slow strides while keeping that exact posture. If you stand up on the push, restart.",
