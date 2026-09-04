@@ -100,12 +100,17 @@ async function framesFromFile(
     trim.endSec != null &&
     trim.endSec - trim.startSec >= 0.5;
 
+  // Keep a safety margin off the hard end of the file — seeking to (or past) the
+  // exact last frame can make ffmpeg exit 0 while writing nothing (seen on some
+  // .mov files), which otherwise fails the whole analysis over one frame.
+  const safeDuration = Math.max(duration - 0.2, 0.3);
+
   const winStart = hasTrim
-    ? Math.max(0, Math.min(trim.startSec!, duration - 0.5))
+    ? Math.max(0, Math.min(trim.startSec!, safeDuration - 0.3))
     : duration * 0.08;
   const winEnd = hasTrim
-    ? Math.max(winStart + 0.5, Math.min(trim.endSec!, duration))
-    : duration * 0.92;
+    ? Math.max(winStart + 0.3, Math.min(trim.endSec!, safeDuration))
+    : Math.min(duration * 0.92, safeDuration);
 
   const start = winStart;
   const end = winEnd;
@@ -115,10 +120,34 @@ async function framesFromFile(
   const frames: ExtractedFrame[] = [];
   for (let i = 0; i < count; i++) {
     const t = count > 1 ? start + step * i : duration / 2;
-    const outFile = join(workDir, `frame-${i}.jpg`);
-    const { code, stderr } = await runFfmpeg([
+    const base64 = await extractOneFrame(videoFile, workDir, i, t, safeDuration);
+    if (base64) {
+      frames.push({ index: i, timeSec: Number(t.toFixed(2)), base64, mediaType: "image/jpeg" });
+    }
+  }
+
+  if (frames.length === 0) {
+    throw new Error("Could not extract any frames from this clip.");
+  }
+
+  return { durationSec: Number(duration.toFixed(2)), frames };
+}
+
+/** Grabs one frame at `t`, nudging backward and retrying if ffmpeg writes nothing. */
+async function extractOneFrame(
+  videoFile: string,
+  workDir: string,
+  index: number,
+  t: number,
+  safeDuration: number,
+): Promise<string | null> {
+  const nudges = [0, 0.15, 0.4];
+  for (const nudge of nudges) {
+    const tryT = Math.max(0, Math.min(t - nudge, safeDuration));
+    const outFile = join(workDir, `frame-${index}-${nudge}.jpg`);
+    const { code } = await runFfmpeg([
       "-ss",
-      t.toFixed(3),
+      tryT.toFixed(3),
       "-i",
       videoFile,
       "-frames:v",
@@ -130,17 +159,13 @@ async function framesFromFile(
       "-y",
       outFile,
     ]);
-    if (code !== 0) {
-      throw new Error(`ffmpeg frame extraction failed: ${stderr.slice(-300)}`);
+    if (code !== 0) continue;
+    try {
+      const buf = await readFile(outFile);
+      if (buf.length > 0) return buf.toString("base64");
+    } catch {
+      // ffmpeg exited 0 but wrote nothing — try the next nudge.
     }
-    const base64 = (await readFile(outFile)).toString("base64");
-    frames.push({
-      index: i,
-      timeSec: Number(t.toFixed(2)),
-      base64,
-      mediaType: "image/jpeg",
-    });
   }
-
-  return { durationSec: Number(duration.toFixed(2)), frames };
+  return null;
 }
