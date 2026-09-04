@@ -402,9 +402,9 @@ export const SKILLS: Skill[] = [
         key: "arms",
         name: "Arm Swing",
         checkpoints: [
-          "Arm swing counteracts the leg drive at roughly a 45° angle",
-          "Arms swing in line with the direction of travel, not across the body",
-          "Shoulders relaxed, minimal side-to-side rotation",
+          "Arms swing across the body at roughly a 45° angle, countering the leg drive",
+          "Swing is controlled and matches leg tempo, not a wild cross-body flail",
+          "Shoulders relaxed",
         ],
       },
     ],

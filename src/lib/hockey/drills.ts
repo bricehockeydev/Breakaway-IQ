@@ -386,17 +386,17 @@ export const DRILLS: Drill[] = [
   },
   {
     key: "stride-arm-drive",
-    name: "Front-to-Back Arm Drive",
+    name: "45° Cross-Body Arm Drive",
     skillKeys: ["forward-stride"],
     targetsFlaws: [
-      "arms crossing the body",
+      "arms swinging straight front-to-back with no cross",
       "stick-hand not driving",
       "no arm swing",
-      "upper body rotating side to side",
+      "wild uncontrolled arm swing",
       "tense shoulders",
     ],
     description:
-      "Stride with the arms swinging straight front-to-back in line with your direction of travel (not across the body), staying relaxed. On a full-speed stride the arms should match the leg tempo and add drive, not just balance.",
+      "Stride with the arms swinging across the body at roughly a 45° angle, countering the leg drive, staying controlled and relaxed — not a wild flail. On a full-speed stride the arms should match the leg tempo and add drive, not just balance.",
     prescription: "4 lengths of the ice, 2–3x/week",
   },
   {
