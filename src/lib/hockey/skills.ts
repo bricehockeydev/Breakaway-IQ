@@ -319,7 +319,8 @@ export const SKILLS: Skill[] = [
         key: "posture",
         name: "Posture & Edges",
         checkpoints: [
-          "Knees deeply bent, chest up, nose over toes",
+          "Feet shoulder-width apart, knees slightly bent",
+          "Weight over the balls of the feet, chest up, nose over toes",
           "Outside edge of the inside skate, inside edge of the outside skate",
         ],
       },
@@ -327,7 +328,8 @@ export const SKILLS: Skill[] = [
         key: "crossunder",
         name: "Crossunder Push",
         checkpoints: [
-          "Inside leg pushes fully under and out to the side (not just stepping over)",
+          "Deep knee bend on the push for maximum power (not just stepping over)",
+          "Inside leg pushes fully under and extends out to the side at roughly 45°",
           "Full leg extension on the push, toe finishes pointed",
         ],
       },
