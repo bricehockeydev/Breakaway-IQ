@@ -4,7 +4,13 @@ import { extractFramesFromBuffer } from "@/lib/frames";
 import { readVideoBytes } from "@/lib/storage";
 import { analyzeSkill } from "@/lib/claude";
 
-const FRAME_COUNT = 10;
+// Skating reads (stride tempo, contact time, foot turnover) need denser sampling
+// than a single shot rep does.
+const FRAME_COUNT: Record<string, number> = {
+  shooting: 10,
+  stickhandling: 12,
+  skating: 16,
+};
 
 /**
  * Runs the full pipeline for one Analysis row: download clip -> extract frames
@@ -23,7 +29,8 @@ export async function processAnalysis(analysisId: string): Promise<void> {
 
   try {
     const bytes = await readVideoBytes(analysis.videoUrl);
-    const { durationSec, frames } = await extractFramesFromBuffer(bytes, FRAME_COUNT, {
+    const frameCount = FRAME_COUNT[skill.category] ?? 10;
+    const { durationSec, frames } = await extractFramesFromBuffer(bytes, frameCount, {
       startSec: analysis.trimStartSec,
       endSec: analysis.trimEndSec,
     });

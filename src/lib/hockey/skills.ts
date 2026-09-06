@@ -350,10 +350,11 @@ export const SKILLS: Skill[] = [
       },
       {
         key: "tempo",
-        name: "Tempo & Balance",
+        name: "Tempo & Contact Time",
         checkpoints: [
           "Quick foot turnover, no gliding between pushes",
-          "Minimal contact with the ice — each skate comes down, loads and pushes without riding a long dead glide",
+          "Short contact time — each skate is on the ice only long enough to load and push, then it's off (use the frame timestamps to estimate how long a foot stays planted)",
+          "Both skates should have similar contact time — neither one parked while the other works",
           "Upper body stays quiet and balanced over the circle",
         ],
       },
@@ -398,6 +399,7 @@ export const SKILLS: Skill[] = [
           "Feet return to shoulder-width apart between strides",
           "Quick recovery — foot doesn't trail behind the body",
           "Quick turnover — the recovering skate touches down, loads and pushes without sitting on a long dead glide (at speed, minimal time flat on the ice)",
+          "Short, even contact time on each skate — use the frame timestamps to estimate how long each foot stays planted; one foot shouldn't be parked while the other works",
         ],
       },
       {
