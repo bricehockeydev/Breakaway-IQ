@@ -1,0 +1,12 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Breakaway IQ icon</title>
+  <rect width="512" height="512" rx="116" fill="#0a2540"/>
+  <g fill="#e11d48">
+    <rect x="58"  y="200" width="118" height="26" rx="13"/>
+    <rect x="58"  y="247" width="150" height="26" rx="13"/>
+    <rect x="58"  y="294" width="96"  height="26" rx="13"/>
+  </g>
+  <text x="292" y="350" text-anchor="middle"
+        font-family="'Bahnschrift','DIN Alternate','Segoe UI',Arial,sans-serif"
+        font-weight="700" font-size="252" fill="#ffffff" letter-spacing="-8">IQ</text>
+</svg>
