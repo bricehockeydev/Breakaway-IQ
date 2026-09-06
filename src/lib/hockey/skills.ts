@@ -323,8 +323,10 @@ export const SKILLS: Skill[] = [
           "Weight over the balls of the feet, chest up, nose over toes",
           "Weight is on the front of the blade (toward the toes) — check where the steel contacts the ice, not on the heel",
           "Body weight shifted / leaning toward the direction of travel (into the turn)",
+          "Skates stay under the hips, not way out to the side",
           "Head looking in the direction of travel, not down at the feet",
           "Shoulders somewhat turned to face the direction of travel",
+          "Inside shoulder dipped down toward the middle of the circle",
           "Outside edge of the inside skate, inside edge of the outside skate",
         ],
       },
@@ -334,6 +336,7 @@ export const SKILLS: Skill[] = [
         checkpoints: [
           "Deep knee bend on the push for maximum power (not just stepping over)",
           "Inside leg pushes fully under and extends out to the side at roughly 45°",
+          "Drive the power by pressing hard into the ice with the outside edge of the inside skate",
           "Full leg extension on the push, toe finishes pointed",
         ],
       },
