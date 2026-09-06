@@ -366,8 +366,8 @@ export const SKILLS: Skill[] = [
     category: "skating",
     blurb: "Straight-line speed — deep posture, full side extension, quick recovery under the body.",
     recordingInstructions: [
-      "Film from the FRONT (skating toward the camera) or the SIDE — either works; front shows knee tracking, foot recovery and arm swing, side shows knee bend, extension and posture.",
-      "Skate 4–6 hard strides straight at or past the camera. Keep the whole body in frame.",
+      "Best angle: a front 3/4 view (camera slightly off to one side as you skate toward it) — it shows the leg fully extended out to the side, the knee bend, and the arm swing all at once. A straight side view or straight-on front view also work.",
+      "Skate 4–6 hard strides at or past the camera. Keep the whole body in frame.",
       "Under 8 seconds. Game-pace strides, not a slow glide.",
     ],
     phases: [
@@ -385,8 +385,9 @@ export const SKILLS: Skill[] = [
         key: "push",
         name: "Push & Extension",
         checkpoints: [
-          "Push out to the SIDE at ~45° with the steel (edge)",
-          "Full leg extension — hip, knee and ankle all straighten",
+          "Push comes through the ball of the foot",
+          "Push goes out to the SIDE (~45°), NOT straight back behind the body",
+          "Full leg extension — hip, knee and ankle all straighten completely",
           "Whole blade pushes, finishing with a toe snap",
           "Drive leg fully loaded before the push (no early release)",
         ],
